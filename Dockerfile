@@ -1,13 +1,15 @@
 FROM python:3.10-slim
 
-WORKDIR /app
+# Crear y usar un directorio seguro como directorio de trabajo
+RUN useradd -ms /bin/bash mlflowuser
+RUN mkdir -p /mlflow/mlruns /mlflow/artifacts && chmod -R 777 /mlflow
+WORKDIR /mlflow
 
 # Instalar dependencias
 COPY requirements.txt .
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
-# Crear carpetas necesarias
-RUN mkdir -p /app/mlruns /app/artifacts
+USER mlflowuser
 
 # Exponer puerto de MLflow
 EXPOSE 5000
