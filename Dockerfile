@@ -13,8 +13,9 @@ RUN mkdir -p /app/mlruns /app/artifacts
 EXPOSE 5000
 
 # Comando para iniciar MLflow server
-CMD ["mlflow", "server", \
-     "--host", "0.0.0.0", \
-     "--port", "5000", \
-     "--backend-store-uri", "sqlite:///mlflow.db", \
-     "--default-artifact-root", "./artifacts"]
+CMD ["mlflow", "server",
+     "--host", "0.0.0.0",
+     "--port", "5000",
+     "--backend-store-uri", "sqlite:///:memory:",
+     "--default-artifact-root", "./artifacts",
+     "--workers", "1"]
